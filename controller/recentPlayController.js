@@ -2,37 +2,38 @@ const { query } = require('express')
 var dbConfig = require('../util/dbconfig')
 // 增加单个最近播放
 addRecentMusic = (req,res)=>{
-    let {id} = req.query
-    var sqlByPage = 'select count(*) from recentplay where id= ?'
-    var sqlArrByPage = [id]
-    var callBackByPagr = (err,data)=>{
-    if (err) {
-        console.log('出错了');
-        return
-    }
-    else{
-        if (data == 0) {
-            res.send({
-                msg:'已存在'
-            })
-            return 
-        }
+    // let {id} = req.query
+    // var sqlByPage = 'select count(*) from recentplay where id= ?'
+    // var sqlArrByPage = [id]
+    // var callBackByPagr = (err,data)=>{
+    // if (err) {
+    //     console.log('出错了');
+    //     return
+    // }
+    // else{
+    //     if (data == 0) {
+    //         res.send({
+    //             msg:'已存在'
+    //         })
+    //         return 
+    //     }
         var name = req.body.musicName
         var singer = req.body.musicSinger
         var cover = req.body.musicCover
         var api = req.body.musicApi
         var user = req.body.user
-        var id = req.body.id
+        var musicId = req.body.id
         //声明图片名字为时间戳和随机数拼接成的，尽量确保唯一性
-        // let id = Date.now()+parseInt(Math.random()*999)+parseInt(Math.random()*2222);
-        var sql = "insert into recentplay (id,name,singer,cover,api,user) values(?,?,?,?,?,?)";
-        var sqlArr = [id,name,singer,cover,api,user];
+        let id = Date.now()+parseInt(Math.random()*999)+parseInt(Math.random()*2222);
+        var sql = "insert into recentplay (id,name,singer,cover,api,user,musicId) values(?,?,?,?,?,?,?)";
+        var sqlArr = [id,name,singer,cover,api,user,musicId];
         var callBack = (err,data)=>{
             if (err) {
+                console.log(err);
                 res.send({
                     msg:'已存在'
                 })
-                console.log('已存在');
+               
                 return
             }
             res.send({
@@ -41,9 +42,9 @@ addRecentMusic = (req,res)=>{
         }
         dbConfig.sqlConnect(sql,sqlArr,callBack)
                
-    }
-}
-dbConfig.sqlConnect(sqlByPage,sqlArrByPage,callBackByPagr)
+    // }
+// }
+// dbConfig.sqlConnect(sqlByPage,sqlArrByPage,callBackByPagr)
 }
 // 获取单个最近播放
 getSingRecentMusic = (req,res)=>{
@@ -57,6 +58,23 @@ getSingRecentMusic = (req,res)=>{
             return
         }
         res.send({
+            data
+        })
+    }
+    dbConfig.sqlConnect(sql,sqlArr,callBack)
+}
+// 获取用户所有最近播放
+getAllRecentUserMusic = (req,res)=>{
+    let {user} = req.query
+    var sql = `select * from recentplay where user=?`;
+    var sqlArr = [user]
+    var callBack = (err,data)=>{
+        if (err) {
+            console.log(err);
+            console.log('出错了');
+            return
+        }
+        res.json({
             data
         })
     }
@@ -153,5 +171,6 @@ module.exports = {
     getSingRecentMusic,
     queryNextSing,
     queryUpxtSing,
-    getAllRecentMusic
+    getAllRecentMusic,
+    getAllRecentUserMusic
 }
