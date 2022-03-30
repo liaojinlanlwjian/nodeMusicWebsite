@@ -1,5 +1,6 @@
 const experss = require('express')
 const path=require('path');
+const cors=require('cors');
 
 const app = experss()
 // app.use(express.static('public'))
@@ -7,9 +8,14 @@ const usersRouter = require('./router/user')
 const musicListRouter = require('./router/musicList')
 const recommendRouter = require('./router/recommend')
 const recentPlayRouter = require('./router/recentPlay')
+const musicUserRouter = require('./router/musicUser')
+const myLikerRouter = require('./router/mylike')
+const singListRouter = require('./router/singList')
+const singListMusicRouter = require('./router/singListMusic')
 var bodyParser = require('body-parser')
 //配置解析表单请求体
 app.use(experss.json())
+// app.use(cors)
 app.use(experss.static(path.join(__dirname, 'public')))
 //解析表单数据请求体 直接挂载
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -18,6 +24,10 @@ app.use('/api/user',usersRouter)
 app.use('/api/music',musicListRouter)
 app.use('/api/recommend',recommendRouter)
 app.use('/api/recent',recentPlayRouter)
+app.use('/api/musicUser',musicUserRouter)
+app.use('/api/like',myLikerRouter)
+app.use('/api/singlist',singListRouter)
+app.use('/api/singlistmusic',singListMusicRouter)
 
 app.listen(3001,()=>{
     console.log("running at 3001")

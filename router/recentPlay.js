@@ -4,6 +4,7 @@ var recent = require('../controller/recentPlayController')
 router
 .get('/querySingRecent',recent.getSingRecentMusic)
 .get('/queryAllRecent',recent.getAllRecentMusic)
+.get('/queryAllUserRecent',recent.getAllRecentUserMusic)
 .post('/addRecentPlay',recent.addRecentMusic)
 // .delete('/deleteSingUser',user.deleteSingUser)
 // .post('/addSingUser',user.addSingUser)
