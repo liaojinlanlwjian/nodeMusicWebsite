@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "time": "zhuzhu",
+      "spend": "100",
+      "user": "lan",
+      "type": "kkk",
+      "id": 4
+    },
+    {
+      "time": "ooo",
+      "spend": "100",
+      "user": "liu",
+      "type": "kkk",
+      "id": 5
+    },
+    {
+      "time": "1.23",
+      "spend": "1000",
+      "user": "liu",
+      "type": "animase",
+      "id": 6
+    }
+  ]
+}
