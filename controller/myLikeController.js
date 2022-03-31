@@ -47,9 +47,9 @@ addMylike = (req,res)=>{
     var type = req.body.musicType
     var status = req.body.musicStatus
     var user = req.body.user
-    var id = req.body.id
+    // var id = req.body.id
     //声明图片名字为时间戳和随机数拼接成的，尽量确保唯一性
-    // let id = Date.now()+parseInt(Math.random()*999)+parseInt(Math.random()*2222);
+    let id = Date.now()+parseInt(Math.random()*999)+parseInt(Math.random()*2222);
     var sql = "insert into mylike (id,musicName,musicSinger,musicCover,musicApi,musicTraffic,musicDownloads,musicAuthor,des,musicMsg,musicType,musicStatus,user) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     var sqlArr = [id,name,singer,cover,api,traffic,down,author,describe,msg,type,status,user];
     var callBack = (err,data)=>{

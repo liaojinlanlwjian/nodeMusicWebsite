@@ -1,5 +1,5 @@
 var dbConfig = require('../util/dbconfig')
-//封装对use表的操作
+//封装对推荐表的操作
 //获取全部用户
 getAllRecommend = (req,res)=>{
     let {start} = req.query

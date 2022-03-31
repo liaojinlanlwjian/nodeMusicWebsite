@@ -1,6 +1,6 @@
 const { get } = require('express/lib/response')
 var dbConfig = require('../util/dbconfig')
-//封装对use表的操作
+//封装对歌单表的操作
 //获取全部歌单
 getAllSingList = (req,res)=>{
     let {user} = req.query

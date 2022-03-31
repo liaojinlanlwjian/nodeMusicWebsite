@@ -12,6 +12,8 @@ const musicUserRouter = require('./router/musicUser')
 const myLikerRouter = require('./router/mylike')
 const singListRouter = require('./router/singList')
 const singListMusicRouter = require('./router/singListMusic')
+const mvListRouter = require('./router/mvList')
+const commentListRouter = require('./router/commentList')
 var bodyParser = require('body-parser')
 //配置解析表单请求体
 app.use(experss.json())
@@ -28,6 +30,8 @@ app.use('/api/musicUser',musicUserRouter)
 app.use('/api/like',myLikerRouter)
 app.use('/api/singlist',singListRouter)
 app.use('/api/singlistmusic',singListMusicRouter)
+app.use('/api/mvList',mvListRouter)
+app.use('/api/commmentList',commentListRouter)
 
 app.listen(3001,()=>{
     console.log("running at 3001")
