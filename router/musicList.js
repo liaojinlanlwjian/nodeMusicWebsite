@@ -8,6 +8,8 @@ const { log } = require('console');
 musicRouter
 .get('/queryAllMusic',music.getAllMusic)
 .get('/querySingleMusic',music.getSingMusic)
+.get('/getSingerMusic',music.getSingerMusic)
+.get('/getSearchMusic',music.getSearchMusic)
 .delete('/deleteSingMusic',music.deleteSingMusic)
 .post('/addSingMusic',music.addSingMusic)
 .post('/editSingMusic',music.editSingMusic)

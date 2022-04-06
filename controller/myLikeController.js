@@ -17,11 +17,11 @@ getAllLike = (req,res)=>{
 }
 dbConfig.sqlConnect(sqlByPage,sqlArrByPage,callBackByPagr)
 }
-// 删除单个用户信息
+// 删除单个喜欢
 deleteMyLike = (req,res)=>{
-    let {id} = req.query
-    var sql = `delete from mylike where id=?`;
-    var sqlArr = [id]
+    let {musicId} = req.query
+    var sql = `delete from mylike where musicId=?`;
+    var sqlArr = [musicId]
     var callBack = (err,data)=>{
         if (err) {
             console.log('出错了');
@@ -46,12 +46,13 @@ addMylike = (req,res)=>{
     var msg = req.body.musicMsg
     var type = req.body.musicType
     var status = req.body.musicStatus
+    var musicId = req.body.musicId
     var user = req.body.user
     // var id = req.body.id
     //声明图片名字为时间戳和随机数拼接成的，尽量确保唯一性
     let id = Date.now()+parseInt(Math.random()*999)+parseInt(Math.random()*2222);
-    var sql = "insert into mylike (id,musicName,musicSinger,musicCover,musicApi,musicTraffic,musicDownloads,musicAuthor,des,musicMsg,musicType,musicStatus,user) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    var sqlArr = [id,name,singer,cover,api,traffic,down,author,describe,msg,type,status,user];
+    var sql = "insert into mylike (id,musicName,musicSinger,musicCover,musicApi,musicTraffic,musicDownloads,musicAuthor,des,musicMsg,musicType,musicStatus,musicId,user) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    var sqlArr = [id,name,singer,cover,api,traffic,down,author,describe,msg,type,status,musicId,user];
     var callBack = (err,data)=>{
         if (err) {
             console.log(err);

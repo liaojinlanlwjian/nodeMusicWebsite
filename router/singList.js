@@ -5,6 +5,6 @@ router
 .get('/getAllSingList',singlist.getAllSingList)
 .delete('/deleteSingList',singlist.deleteSingList)
 .post('/addSingList',singlist.addSingList)
-.post('/editSingList',singlist.editSingList)
+.get('/seacrSingList',singlist.seacrSingList)
 module.exports = router
  

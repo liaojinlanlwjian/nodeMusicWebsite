@@ -5,5 +5,5 @@ router
 .get('/getSingListMusic',singlistmusic.getSingListMusic)
 .delete('/deleteSingListMusic',singlistmusic.deleteSingListMusic)
 .post('/addSingListMusic',singlistmusic.addSingListMusic)
-// .post('/editSingList',singlistmusic.editSingList)
+.get('/getAllListMusic',singlistmusic.getAllListMusic)
 module.exports = router

@@ -2,7 +2,7 @@ var dbConfig = require('../util/dbconfig')
 
 const res = require('express/lib/response')
 //封装对use表的操作
-//获取全部用户
+//获取全部音乐
 getAllMusic = (req,res)=>{
     let {start} = req.query
     var sqlByPage = 'select * from musicList limit ?,5'
@@ -33,7 +33,61 @@ getAllMusic = (req,res)=>{
 }
 dbConfig.sqlConnect(sqlByPage,sqlArrByPage,callBackByPagr)
 }
-// 获取单个用户信息
+// 获取歌手音乐信息
+getSingerMusic = (req,res)=>{
+    console.log(req);
+    let {singerName} = req.query
+    console.log(singerName);
+    var sql = `select * from musicList where musicSinger=?`;
+    var sqlArr = [singerName]
+    var callBack = (err,data)=>{
+        if (err) {
+            console.log('出错了');
+            return
+        }
+        res.send({
+            data
+        })
+    }
+        dbConfig.sqlConnect(sql,sqlArr,callBack)
+}
+// 获取搜索音乐信息
+getSearchMusic = (req,res)=>{
+    let {value} = req.query
+    console.log(req.query);
+    var sql = `select * from musicList where musicName=?`;
+    var sqlArr = [value]
+    var callBack = (err,data)=>{
+        if (err) {
+            console.log('出错了');
+            return
+        }
+        console.log(data);
+        if (data.length == 0) {
+            var sqlSinger = `select * from musicList where musicSinger=?`;
+            var sqlArrSinger = [value]
+            var callBackSinger = (err,data)=>{
+                if (err) {
+                    console.log('出错了');
+                    return
+                }
+                console.log(data);
+                    res.send({
+                        data
+                    })
+            }
+                dbConfig.sqlConnect(sqlSinger,sqlArrSinger,callBackSinger)
+        }
+        else{
+            res.send({
+                data
+            })
+        }
+        
+    }
+        dbConfig.sqlConnect(sql,sqlArr,callBack)
+}
+// 获取单个音乐信息
 getSingMusic = (req,res)=>{
     let {id} = req.query
     var sql = `select * from musicList where id=?`;
@@ -49,7 +103,7 @@ getSingMusic = (req,res)=>{
     }
         dbConfig.sqlConnect(sql,sqlArr,callBack)
 }
-// 删除单个用户信息
+// 删除单个音乐信息
 deleteSingMusic = (req,res)=>{
     let {id} = req.query
     console.log(id);
@@ -66,7 +120,7 @@ deleteSingMusic = (req,res)=>{
     }
         dbConfig.sqlConnect(sql,sqlArr,callBack)
 }
-// 增加单个用户信息
+// 增加单个音乐信息
 addSingMusic = (req,res)=>{
     var name = req.body.musicName
     var singer = req.body.musicSinger
@@ -95,7 +149,7 @@ addSingMusic = (req,res)=>{
     }
         dbConfig.sqlConnect(sql,sqlArr,callBack)
 }
-//修改单个用户信息
+//修改单个音乐信息
 editSingMusic = (req,res)=>{
     var id = req.body.id
     var name = req.body.musicName
@@ -134,4 +188,6 @@ module.exports = {
     deleteSingMusic,
     addSingMusic,
     editSingMusic,
+    getSingerMusic,
+    getSearchMusic
 }

@@ -1,5 +1,5 @@
 var dbConfig = require('../util/dbconfig')
-//封装对use表的操作
+//封装对歌单歌曲表的操作
 //获取全部该歌单的全部歌曲
 getSingListMusic = (req,res)=>{
     let {user,singListId} = req.query
@@ -17,7 +17,24 @@ getSingListMusic = (req,res)=>{
 }
 dbConfig.sqlConnect(sqlByPage,sqlArrByPage,callBackByPagr)
 }
-// 删除单个用户信息
+//获取用户的所有歌单
+getAllListMusic = (req,res)=>{
+    let {user} = req.query
+    var sqlByPage = 'select * from singlistmusic where user=? '
+    var sqlArrByPage = [user]
+    var callBackByPagr = (err,data)=>{
+    if (err) {
+        console.log(err);
+        console.log('出错了');
+        return
+    }
+    res.json({
+        data
+    })
+}
+dbConfig.sqlConnect(sqlByPage,sqlArrByPage,callBackByPagr)
+}
+// 删除单个歌单歌曲信息
 deleteSingListMusic = (req,res)=>{
     let {id} = req.query
     console.log(id);
@@ -48,11 +65,12 @@ addSingListMusic = (req,res)=>{
     var type = req.body.musicType
     var status = req.body.musicStatus
     var user = req.body.user
+    var musicId = req.body.musicId
     var singListId = req.body.singListId
     //声明图片名字为时间戳和随机数拼接成的，尽量确保唯一性
     let id = Date.now()+parseInt(Math.random()*999)+parseInt(Math.random()*2222);
-    var sql = "insert into singlistmusic (id,musicName,musicSinger,musicCover,musicApi,musicTraffic,musicDownloads,musicAuthor,des,musicMsg,musicType,musicStatus,user,singListId) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    var sqlArr = [id,name,singer,cover,api,traffic,down,author,describe,msg,type,status,user,singListId];
+    var sql = "insert into singlistmusic (id,musicName,musicSinger,musicCover,musicApi,musicTraffic,musicDownloads,musicAuthor,des,musicMsg,musicType,musicStatus,user,musicId,singListId) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    var sqlArr = [id,name,singer,cover,api,traffic,down,author,describe,msg,type,status,user,musicId,singListId];
     var callBack = (err,data)=>{
         if (err) {
             console.log(err);
@@ -68,5 +86,6 @@ addSingListMusic = (req,res)=>{
 module.exports = {
     addSingListMusic,
     getSingListMusic,
-    deleteSingListMusic
+    deleteSingListMusic,
+    getAllListMusic
 }

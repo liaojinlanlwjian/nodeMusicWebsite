@@ -18,7 +18,7 @@ getAllSingList = (req,res)=>{
 }
 dbConfig.sqlConnect(sqlByPage,sqlArrByPage,callBackByPagr)
 }
-// 删除单个用户信息
+// 删除单个歌单
 deleteSingList = (req,res)=>{
     let {id} = req.query
     var sql = `delete from singlist where id=?`;
@@ -38,12 +38,14 @@ deleteSingList = (req,res)=>{
 // 增加单个歌单
 addSingList = (req,res)=>{
     var name = req.body.name
-    var value = req.body.value
+    var cover = req.body.cover
     var user = req.body.user
+    var time = req.body.time
+    var by = req.body.by
     //声明图片名字为时间戳和随机数拼接成的，尽量确保唯一性
     let id = Date.now()+parseInt(Math.random()*999)+parseInt(Math.random()*2222);
-    var sql = "insert into singlist (id,name,value,user) values(?,?,?,?)";
-    var sqlArr = [id,name,value,user];
+    var sql = "insert into singlist (id,name,user,created_by,created_time,cover) values(?,?,?,?,?,?)";
+    var sqlArr = [id,name,user,by,time,cover];
     var callBack = (err,data)=>{
         if (err) {
             console.log(err);
@@ -56,28 +58,24 @@ addSingList = (req,res)=>{
     }
         dbConfig.sqlConnect(sql,sqlArr,callBack)
 }
-//修改单个用户信息
-editSingList = (req,res)=>{
-    var id = req.body.id
-    var name = req.body.name
-    var value = req.body.value
-    var user = req.body.user
-    // let {id} = req.query
-    var sql = `update singlist set name=?,value=?,user=? where id=?`;
-    var sqlArr = [name,value,user,id]
+//查询单个歌单信息
+seacrSingList = (req,res)=>{
+    let {id} = req.query
+    var sql = 'select * from singlist where id=?'
+    var sqlArr = [id]
     var callBack = (err,data)=>{
         if (err) {
             console.log('出错了');
             res.json({
                 status:500,
-                msg:'更新失败'
+                msg:'查询失败'
             })
             return
         }
-        console.log(data);
         res.json({
             status:200,
-            msg:'更新成功'
+            msg:'查询成功',
+            data
         })
     }
         dbConfig.sqlConnect(sql,sqlArr,callBack)
@@ -86,5 +84,5 @@ module.exports = {
     getAllSingList,
     deleteSingList,
     addSingList,
-    editSingList
+    seacrSingList
 }
