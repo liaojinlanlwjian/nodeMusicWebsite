@@ -17,6 +17,7 @@ const commentListRouter = require('./router/commentList')
 const singerListRouter = require('./router/singerList')
 const playListRouter = require('./router/playlistrecommed')
 const playlistmusicRouter = require('./router/playlistmusic')
+const slideshowRouter = require('./router/slideshow')
 var bodyParser = require('body-parser')
 //配置解析表单请求体
 app.use(experss.json())
@@ -38,6 +39,7 @@ app.use('/api/commmentList',commentListRouter)
 app.use('/api/singer',singerListRouter)
 app.use('/api/playlist',playListRouter)
 app.use('/api/playlistmusic',playlistmusicRouter)
+app.use('/api/slideshow',slideshowRouter)
 
 app.listen(3001,()=>{
     console.log("running at 3001")
